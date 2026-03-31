@@ -8,10 +8,10 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <Routes>
-          {/* When the URL is exactly '/', show the Home component */}
+          {/* When the URL is exactly '/', shows the Home component */}
           <Route path="/" element={<Home />} />
 
-          {/* When the URL is '/film', show the FlickFetch component */}
+          {/* When the URL is '/film', shows the FlickFetch component */}
           <Route path="/film" element={<FlickFetch />} />
         </Routes>
       </div>

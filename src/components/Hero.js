@@ -1,16 +1,25 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // 1. Imports the navigation hook
 
 const Hero = () => {
   const [searchStatus, setSearchStatus] = useState("idle"); // 'idle', 'loading', 'success'
+  const [searchInput, setSearchInput] = useState(""); // 2. useState to track the input
+  const navigate = useNavigate(); // 3. Initializes the hook
 
-  // Replaces your searchPending() function
   const handleSearch = () => {
+    // Prevents the animation routing if the search bar is empty
+    if (!searchInput.trim()) return;
+
     setSearchStatus("loading");
     setTimeout(() => {
       setSearchStatus("success");
 
-      // Optional: Reset back to idle after a few seconds
-      setTimeout(() => setSearchStatus("idle"), 2000);
+      // 4. Waits a fraction of a second so the user can see the green checkmark,
+      // then navigates to the film page and passes the searchInput behind the scenes
+      setTimeout(() => {
+        setSearchStatus("idle");
+        navigate("/film", { state: { initialSearch: searchInput } });
+      }, 800);
     }, 1000);
   };
 
@@ -25,6 +34,9 @@ const Hero = () => {
               className="header__input--search"
               type="text"
               placeholder="Search by Movie Name or Keyword"
+              value={searchInput} // 5. Binds the input to the state
+              onChange={(e) => setSearchInput(e.target.value)} // 6. Updates state as user types
+              onKeyDown={(e) => e.key === "Enter" && handleSearch()} // Allows pressing 'Enter' to search
             />
             <button className="header__input--btn" onClick={handleSearch}>
               <svg

@@ -1,21 +1,26 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const FlickFetch = () => {
-  // State management
-  const [searchTerm, setSearchTerm] = useState("");
+  const location = useLocation(); // 1. Catches the data sent from the router
+
+  // 2. Looks for the passed data; if it exists, uses it. If not, starts with a blank string ('')
+  const [searchTerm, setSearchTerm] = useState(
+    location.state?.initialSearch || "",
+  );
+
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [sortOption, setSortOption] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
 
-  // Ref to detect clicks outside the search area
+  // useRef to detect clicks outside the search area
   const searchContainerRef = useRef(null);
 
-  // Handle the debounced API search
+  // Handles the debounced API search
   useEffect(() => {
-    // If the search term is empty, clear everything
+    // If the search term is empty, clears everything
     if (!searchTerm.trim()) {
       setMovies([]);
       setShowDropdown(false);
@@ -26,7 +31,7 @@ const FlickFetch = () => {
     setIsLoading(true);
     setShowDropdown(true);
 
-    // Set a delay (debounce) so the API isn't called on every single keystroke
+    // Sets a delay (debounce) so the API isn't called on every single keystroke
     const delayDebounceFn = setTimeout(async () => {
       try {
         const response = await fetch(
@@ -51,10 +56,10 @@ const FlickFetch = () => {
     return () => clearTimeout(delayDebounceFn);
   }, [searchTerm]);
 
-  // Handle clicking outside the search area to close the dropdown
+  // Handles clicking outside the search area to close the dropdown
   useEffect(() => {
     const handleClickOutside = (event) => {
-      // Check if the click is outside the search area AND not on the filter dropdown
+      // Checks if the click is outside the search area and (&&) not on the filter dropdown
       if (
         searchContainerRef.current &&
         !searchContainerRef.current.contains(event.target) &&
@@ -68,10 +73,10 @@ const FlickFetch = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Fetch detailed movie info when a user clicks a movie in the dropdown
+  // Fetches detailed movie info when a user clicks a movie in the dropdown
   const fetchMovieDetails = async (id) => {
     setShowDropdown(false);
-    setSearchTerm(""); // Clear search box
+    setSearchTerm(""); // Clears search box
 
     try {
       const response = await fetch(
@@ -84,7 +89,7 @@ const FlickFetch = () => {
     }
   };
 
-  // Reset button logic
+  // Resets button logic
   const clearInput = () => {
     setSearchTerm("");
     setMovies([]);
@@ -93,7 +98,7 @@ const FlickFetch = () => {
     setSortOption("");
   };
 
-  // Derive sorted movies dynamically based on the current sortOption
+  // Derives sorted movies dynamically based on the current sortOption
   const sortedMovies = [...movies].sort((a, b) => {
     if (sortOption === "Oldest_To_Newest")
       return parseInt(a.Year) - parseInt(b.Year);
@@ -101,7 +106,7 @@ const FlickFetch = () => {
       return parseInt(b.Year) - parseInt(a.Year);
     if (sortOption === "A_To_Z") return a.Title.localeCompare(b.Title);
     if (sortOption === "Z_To_A") return b.Title.localeCompare(a.Title);
-    return 0; // Default: no sorting
+    return 0; // Default: No sorting
   });
 
   return (

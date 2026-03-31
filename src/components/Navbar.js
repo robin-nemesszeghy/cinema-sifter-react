@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Replaces your openMenu() and closeMenu() functions
+  // Replaces openMenu() and closeMenu() functions
   useEffect(() => {
     if (isMenuOpen) {
       document.body.classList.add("menu--open");
@@ -16,7 +16,7 @@ const Navbar = () => {
     return () => document.body.classList.remove("menu--open");
   }, [isMenuOpen]);
 
-  // Replaces your showContactAlert() function
+  // Replaces showContactAlert() function
   const handleContactClick = (e) => {
     e.preventDefault(); // Prevents the default '#' link jump
     alert("This feature has not been implemented.");
@@ -26,7 +26,7 @@ const Navbar = () => {
     <nav>
       <div className="nav__container">
         <figure className="nav__logo">
-          {/* Note: Ensure your assets folder is placed inside the 'public' folder of your React app */}
+          {/* NOTE: The assets folder is inside the 'public' folder of the React app rather than inside the src */}
           <img
             className="nav__logo--img"
             src="/assets/CinemaSifter_logo_img.png"
