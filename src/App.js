@@ -1,24 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./components/Home";
+import FlickFetch from "./components/FlickFetch";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <Routes>
+          {/* When the URL is exactly '/', show the Home component */}
+          <Route path="/" element={<Home />} />
+
+          {/* When the URL is '/film', show the FlickFetch component */}
+          <Route path="/film" element={<FlickFetch />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 
