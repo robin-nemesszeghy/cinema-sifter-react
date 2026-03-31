@@ -143,7 +143,7 @@ HEADER
 */
 
 header {
-  height: calc(100vh-100px);
+  height: calc(100vh - 100px);
 }
 
 .header__container {
@@ -355,10 +355,6 @@ MOBILE MENU
 FLICK FETCH
 
 */
-
-.film__body {
-  /* Removed background-color: #ffffff; so the overlay can show through */
-}
 
 .row__header {
   max-width: 100%;
@@ -581,7 +577,7 @@ h3 {
   font-size: 20px;
   color: rgb(52, 52, 54);
   display: block;
-  margin-block-start: 0 em;
+  margin-block-start: 0em;
   margin-block-end: 0.83em;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
